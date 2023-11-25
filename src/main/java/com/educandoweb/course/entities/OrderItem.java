@@ -1,6 +1,7 @@
 package com.educandoweb.course.entities;
 
 import com.educandoweb.course.entities.pk.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -16,7 +17,7 @@ public class OrderItem implements Serializable {
     private static final long serialVersionUID = 1l;
 
     @EmbeddedId
-    private OrderItemPK idpk;
+    private OrderItemPK idpk = new OrderItemPK();
     private Integer quantity;
     private Double price;
 
@@ -30,6 +31,8 @@ public class OrderItem implements Serializable {
         this.quantity = quantity;
         this.price = price;
     }
+
+    @JsonIgnore
     public Order getOrder(){
         return idpk.getOrder();
     }
