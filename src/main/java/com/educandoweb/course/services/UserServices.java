@@ -2,8 +2,11 @@ package com.educandoweb.course.services;
 
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.repositories.UserRepository;
+import com.educandoweb.course.services.exeptions.DataBaseExeption;
 import com.educandoweb.course.services.exeptions.ResourceNotFoundExeption;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -28,9 +31,14 @@ public class UserServices {
 
     //deletando id do banco de dados
     public void delete(long id){
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        }catch (EmptyResultDataAccessException e){
+            throw new ResourceNotFoundExeption(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DataBaseExeption(e.getMessage());
+        }
     }
-
     //atualizando dado usuario
 
     public User update(long id , User obj){
