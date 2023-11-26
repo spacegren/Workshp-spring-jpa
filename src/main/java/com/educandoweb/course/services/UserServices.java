@@ -2,6 +2,7 @@ package com.educandoweb.course.services;
 
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.repositories.UserRepository;
+import com.educandoweb.course.services.exeptions.ResourceNotFoundExeption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -16,7 +17,7 @@ public class UserServices {
     }
     public User findyById(Long id){
         Optional<User> obj = repository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundExeption(id));
     }
 
     //criando operaçao para salvar usuario no banco de dados
