@@ -42,4 +42,10 @@ public class UserResources {
         return ResponseEntity.noContent().build();
     }
 
+    //atualizaçao de usuario
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<User> update(@PathVariable long id , @RequestBody User obj){
+       obj =  services.update(id , obj);
+        return ResponseEntity.ok().body(obj);
+    }
 }

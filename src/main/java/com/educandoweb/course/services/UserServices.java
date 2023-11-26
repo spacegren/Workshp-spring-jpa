@@ -29,4 +29,22 @@ public class UserServices {
     public void delete(long id){
         repository.deleteById(id);
     }
+
+    //atualizando dado usuario
+
+    public User update(long id , User obj){
+        User entity = repository.getReferenceById(id);
+        updateDate(entity , obj);
+        return repository.save(entity);
+    }
+
+
+    //update do usuario , mas estou atualizando apenas alguns nao atualizo todos tambem o get reference ele nao busca no banco de dados
+    //ele fica em stage esperando ser usando assim nao quebra a integridade do banco de dados
+    private void updateDate(User entity, User obj) {
+        entity.setName(obj.getName());
+        entity.setEmail(obj.getEmail());
+        entity.setPhone(obj.getPhone());
+    }
+
 }
